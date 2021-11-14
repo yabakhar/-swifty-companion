@@ -3,6 +3,7 @@ import 'package:swifty/projectcard.dart';
 import 'package:swifty/projects_users.dart';
 import 'cursus_details.dart';
 import 'user_info.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class Detail_page extends StatefulWidget {
     Map info;
@@ -19,6 +20,7 @@ class _Detail_pageState extends State<Detail_page> {
 
   UserInfo parseInfo(){
     setState(() {
+
         projectsUsers = widget.info['projects_users'].map<ProjectsUsers>((e) => ProjectsUsers.fromJson(e)).toList();
         userInfo  = UserInfo.fromJson(widget.info);
         cursusdetails = CursusDetails.fromJson(widget.info['cursus_users'][0]);
@@ -29,8 +31,8 @@ class _Detail_pageState extends State<Detail_page> {
   void initState() {
     super.initState();
     parseInfo();
-    // print(cursusdetails.grade.toString());
-    // print(cursusdetails.level.toString());
+    print(widget.info.toString());
+    print((cursusdetails.level % 1).toString());
     // print(userInfo.toString());
     // print(cursusdetails.level.toString());
     // projectsUsers.forEach((element) {
@@ -97,10 +99,28 @@ class _Detail_pageState extends State<Detail_page> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        CircleAvatar(
+         
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [CircleAvatar(
           radius: 60.0,
            backgroundImage: NetworkImage(userInfo.imageUrl),
           backgroundColor: Colors.transparent,
+        ),
+        Padding(
+              padding: EdgeInsets.all(15.0),
+              child: new LinearPercentIndicator(
+                width: MediaQuery.of(context).size.width - 500,
+                animation: true,
+                lineHeight: 20.0,
+                animationDuration: 2500,
+                percent: (cursusdetails.level % 1),
+                center: Text("${cursusdetails.level}%"),
+                linearStrokeCap: LinearStrokeCap.roundAll,
+                progressColor: Colors.green,
+              ),
+            ),
+        ],
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
