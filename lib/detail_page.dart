@@ -5,8 +5,8 @@ import 'cursus_details.dart';
 import 'user_info.dart';
 
 class Detail_page extends StatefulWidget {
-    Map info;
-  Detail_page({ this.info ,  key }) : super(key: key);
+  Map info;
+  Detail_page({this.info, key}) : super(key: key);
   @override
   _Detail_pageState createState() => _Detail_pageState();
 }
@@ -17,13 +17,17 @@ class _Detail_pageState extends State<Detail_page> {
   CursusDetails cursusdetails;
   List<ProjectsUsers> projectsUsers;
 
-  UserInfo parseInfo(){
+  UserInfo parseInfo() {
     setState(() {
-        projectsUsers = widget.info['projects_users'].map<ProjectsUsers>((e) => ProjectsUsers.fromJson(e)).toList();
-        userInfo  = UserInfo.fromJson(widget.info);
-        cursusdetails = CursusDetails.fromJson(widget.info['cursus_users'][0]);
-        skillsDetails = widget.info['cursus_users'][0]['skills'].map<SkillsDetails>((e) => SkillsDetails.fromJson(e)).toList();
-        });
+      projectsUsers = widget.info['projects_users']
+          .map<ProjectsUsers>((e) => ProjectsUsers.fromJson(e))
+          .toList();
+      userInfo = UserInfo.fromJson(widget.info);
+      cursusdetails = CursusDetails.fromJson(widget.info['cursus_users'][0]);
+      skillsDetails = widget.info['cursus_users'][0]['skills']
+          .map<SkillsDetails>((e) => SkillsDetails.fromJson(e))
+          .toList();
+    });
   }
 
   void initState() {
@@ -47,64 +51,68 @@ class _Detail_pageState extends State<Detail_page> {
     //   print("=============>>");
     // });
   }
-@override
+
+  @override
   Widget build(BuildContext context) {
     return new Scaffold(
-            body: Stack(
-              children: [
-                CustomScrollView(
-                  slivers: <Widget>[
-                    SliverAppBar(
-                      title: Center(
-                        child: Text(userInfo.login,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "greycliff-cf-regular")),
-                      ),
-                      expandedHeight: 350.0,
-                      floating: true,
-                      pinned: true,
-                      snap: true,
-                      elevation: 50,
-                      flexibleSpace: FlexibleSpaceBar(
-                        centerTitle: true,
-                        background: header(),
-                      ),
-                    ),
-                    SliverList(
-                        delegate: new SliverChildListDelegate(
-                            _buildListPost(projectsUsers))),
-                  ],
+      body: Stack(
+        children: [
+          CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                title: Center(
+                  child: Text(userInfo.login,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "greycliff-cf-regular")),
                 ),
-              ],
-            ),
-          );
-        }
-    List _buildListPost(List<ProjectsUsers> projectsUsers) {
+                expandedHeight: 350.0,
+                floating: true,
+                pinned: true,
+                snap: true,
+                elevation: 50,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  background: header(),
+                ),
+              ),
+              SliverList(
+                  delegate: new SliverChildListDelegate(
+                      _buildListPost(projectsUsers))),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  List _buildListPost(List<ProjectsUsers> projectsUsers) {
     List<Widget> listItems = [];
     for (int i = 0; i < projectsUsers.length; i++) {
       listItems.add(InkWell(
           child: new Padding(
         padding: new EdgeInsets.all(8.0),
-        child: ProjectCard(projectsUsers:projectsUsers[i]),
+        child: ProjectCard(projectsUsers: projectsUsers[i]),
       )));
     }
     return listItems;
   }
-    Widget header() {
+
+  Widget header() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        CircleAvatar(
+        CircleAvatar (
           radius: 60.0,
-           backgroundImage: NetworkImage(userInfo.imageUrl),
+          backgroundImage: NetworkImage(userInfo.imageUrl),
           backgroundColor: Colors.transparent,
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [          
+          children: [
+            Text(cursusdetails.level.toString()),
             Text(userInfo.email),
             Text(cursusdetails.grade.toString()),
             Text(userInfo.location),
@@ -113,7 +121,5 @@ class _Detail_pageState extends State<Detail_page> {
         )
       ],
     );
-    
   }
 }
-

@@ -9,17 +9,16 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   void pintToken() async {
-     await GetUserData().gettoken();
-      print(stock_token.access_token);
+    await GetUserData().gettoken();
+    print(stock_token.access_token);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     // if (stock_token.access_token == null)
     // {
-      pintToken();
+    pintToken();
     // }
 
     return MaterialApp(
