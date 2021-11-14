@@ -3,6 +3,7 @@ import 'package:swifty/projectcard.dart';
 import 'package:swifty/projects_users.dart';
 import 'cursus_details.dart';
 import 'user_info.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class Detail_page extends StatefulWidget {
   Map info;
@@ -33,8 +34,8 @@ class _Detail_pageState extends State<Detail_page> {
   void initState() {
     super.initState();
     parseInfo();
-    // print(cursusdetails.grade.toString());
-    // print(cursusdetails.level.toString());
+    // print(widget.info.toString());
+    // print((cursusdetails.level % 1).toString());
     // print(userInfo.toString());
     // print(cursusdetails.level.toString());
     // projectsUsers.forEach((element) {
@@ -68,7 +69,7 @@ class _Detail_pageState extends State<Detail_page> {
                           fontWeight: FontWeight.bold,
                           fontFamily: "greycliff-cf-regular")),
                 ),
-                expandedHeight: 350.0,
+                expandedHeight: 300.0,
                 floating: true,
                 pinned: true,
                 snap: true,
@@ -101,24 +102,47 @@ class _Detail_pageState extends State<Detail_page> {
   }
 
   Widget header() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        CircleAvatar (
-          radius: 60.0,
-          backgroundImage: NetworkImage(userInfo.imageUrl),
-          backgroundColor: Colors.transparent,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Column(
+              children: [
+                CircleAvatar(
+                  radius: 60.0,
+                  backgroundImage: NetworkImage(userInfo.imageUrl),
+                  backgroundColor: Colors.transparent,
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Text(cursusdetails.level.toString()),
+                Text(userInfo.email),
+                Text(cursusdetails.grade.toString()),
+                Text(userInfo.location),
+                Text(userInfo.wallet.toString()),
+              ],
+            ),
+          ],
         ),
-        Column(
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(cursusdetails.level.toString()),
-            Text(userInfo.email),
-            Text(cursusdetails.grade.toString()),
-            Text(userInfo.location),
-            Text(userInfo.wallet.toString()),
+            LinearPercentIndicator(
+              width: MediaQuery.of(context).size.width - 10,
+              animation: true,
+              lineHeight: 20.0,
+              animationDuration: 1500,
+              percent: (cursusdetails.level % 1),
+              center: Text("${cursusdetails.level}%"),
+              linearStrokeCap: LinearStrokeCap.roundAll,
+              progressColor: Colors.orange[500],
+            ),
           ],
-        )
+        ),
       ],
     );
   }

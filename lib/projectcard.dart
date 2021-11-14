@@ -20,6 +20,9 @@ class _ProjectCardState extends State<ProjectCard> {
           Text((widget.projectsUsers.project.name != null)
               ? widget.projectsUsers.project.name
               : "-"),
+          // Text((widget.projectsUsers.project.slug != null)
+          //     ? widget.projectsUsers.project.slug
+          //     : "-"),
           Text((widget.projectsUsers.status != null)
               ? widget.projectsUsers.status
               : "-"),

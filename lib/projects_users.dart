@@ -15,10 +15,11 @@ class ProjectsUsers {
 
 class Project {
   String name;
-
+  String slug;
   Project();
 
   Project.fromJson(Map<String, dynamic> json) {
     name = json['name'];
+    slug = json['slug'];
   }
 }
