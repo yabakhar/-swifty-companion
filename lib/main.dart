@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    if (stock_token.access_token == null)
-    {
+    // if (stock_token.access_token == null)
+    // {
       pintToken();
-    }
+    // }
 
     return MaterialApp(
       title: 'Flutter Demo',
