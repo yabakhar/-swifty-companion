@@ -1,7 +1,4 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:multi_charts/multi_charts.dart';
 import 'package:swifty/user_info.dart';
 
 class Skilles extends StatefulWidget {
@@ -15,44 +12,75 @@ class Skilles extends StatefulWidget {
 class _SkillesState extends State<Skilles> {
   List<SkillsDetails> skillsDetails;
   List<String> name;
+  List<Widget> dd;
   List<double> levle;
   double max_value = 0;
   UserInfo parseInfo() {
     setState(() {
-        skillsDetails = widget.info['cursus_users'][0]['skills'].map<SkillsDetails>((e) => SkillsDetails.fromJson(e)).toList() ?? [];
-      
+      skillsDetails = widget.info['cursus_users'][0]['skills']
+              .map<SkillsDetails>((e) => SkillsDetails.fromJson(e))
+              .toList() ??
+          [];
     });
   }
 
   void initState() {
     super.initState();
     parseInfo();
-
-    // print(widget.info.toString());
-    // print(skillsDetails.toString());
     levle = List<double>();
     name = List<String>();
+    dd = List<Widget>();
 
+    print(skillsDetails.length);
     skillsDetails.forEach((element) {
-        levle.add(element.level);
-        if (element.level >= max_value)
-          max_value = element.level;
-        name.add(element.name);
+      dd.add(cc(element));
     });
-     
   }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 100,
-      color: Colors.amber,
-      child: RadarChart(
-              values: levle,
-              labels: name,
-              maxValue: max_value + 2,
-              fillColor: Colors.blue,
-              chartRadiusFactor: 0.8,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Center(child: Text("Skills", textAlign: TextAlign.center)),
+      ),
+      body: Center(
+        child: Wrap(
+          spacing: 6.0,
+          runSpacing: 7.0,
+          direction: Axis.horizontal,
+          alignment: WrapAlignment.center,
+          children: dd,
+        ),
+      ),
     );
   }
+}
+
+Widget cc(SkillsDetails element) {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      color: Colors.blue,
+    ),
+    height: 120,
+    width: 100,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text(
+          element.name,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontFamily: "greycliff-cf-regular"),
+        ),
+        Text(
+          element.level.toString(),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    ),
+  );
 }

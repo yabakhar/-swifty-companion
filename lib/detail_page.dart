@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swifty/projectcard.dart';
 import 'package:swifty/projects_users.dart';
+import 'package:swifty/skilles.dart';
 import 'cursus_details.dart';
 import 'user_info.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -15,6 +16,8 @@ class Detail_page extends StatefulWidget {
 class _Detail_pageState extends State<Detail_page> {
   UserInfo userInfo;
   CursusDetails cursusdetails;
+  CursusDetails cursusdetails1;
+  CursusDetails cursusdetails2;
   List<ProjectsUsers> projectsUsers;
   List<SkillsDetails> skillsDetails;
   UserInfo parseInfo() {
@@ -24,6 +27,8 @@ class _Detail_pageState extends State<Detail_page> {
           .toList();
       userInfo = UserInfo.fromJson(widget.info);
       cursusdetails = CursusDetails.fromJson(widget.info['cursus_users'][0]);
+      cursusdetails1 = CursusDetails.fromJson(widget.info['cursus_users'][1]);
+      // cursusdetails2 = CursusDetails.fromJson(widget.info['cursus_users'][2]);
       skillsDetails = widget.info['cursus_users'][0]['skills']
           .map<SkillsDetails>((e) => SkillsDetails.fromJson(e))
           .toList();
@@ -36,55 +41,61 @@ class _Detail_pageState extends State<Detail_page> {
     // print(widget.info.toString());
     // print((cursusdetails.level % 1).toString());
     // print(userInfo.toString());
-    // print(cursusdetails.level.toString());
+    // print(cursusdetails1.level.toString() + "= ==== = == = > > >> > > > ");
+    // print(cursusdetails.level.toString() + "= ==== = == = > > >> > > > ");
+    // print(cursusdetails2.level.toString() + "= ==== = == = > > >> > > > ");
     // projectsUsers.forEach((element) {
     //   print(element.project.name.toString());
     //   print(element.status.toString());
     //   print(element.finalMark.toString());
     //   print("=============>>");
     // });
-    skillsDetails.forEach((element) {
-      print(element.id.toString());
-      print(element.name.toString());
-      print(element.level.toString());
-      print("=============>>");
-    });
+    // skillsDetails.forEach((element) {
+    //   print(element.id.toString());
+    //   print(element.name.toString());
+    //   print(element.level.toString());
+    //   print("=============>>");
+    // });
+  }
+
+  SliverAppBar _sliverAppBar() {
+    return SliverAppBar(
+      title: Center(
+        child: Text(userInfo.login,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: "greycliff-cf-regular")),
+      ),
+      expandedHeight: 300.0,
+      floating: false,
+      pinned: true,
+      snap: false,
+      elevation: 50,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        background: header(),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: Stack(
-        children: [
-          CustomScrollView(
-            slivers: <Widget>[
-              SliverAppBar(
-                title: Center(
-                  child: Text(userInfo.login,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "greycliff-cf-regular")),
-                ),
-                expandedHeight: 300.0,
-                floating: true,
-                pinned: true,
-                snap: true,
-                elevation: 50,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  background: header(),
-                ),
+        body: DefaultTabController(
+            length: 2,
+            child: TabBarView(children: [
+              CustomScrollView(
+                slivers: <Widget>[
+                  _sliverAppBar(),
+                  SliverList(
+                      delegate: new SliverChildListDelegate(
+                          _buildListPost(projectsUsers))),
+                ],
               ),
-              SliverList(
-                  delegate: new SliverChildListDelegate(
-                      _buildListPost(projectsUsers))),
-            ],
-          ),
-        ],
-      ),
-    );
+              Skilles(info: widget.info),
+            ])));
   }
 
   List _buildListPost(List<ProjectsUsers> projectsUsers) {
@@ -102,15 +113,18 @@ class _Detail_pageState extends State<Detail_page> {
   Widget header() {
     return Container(
       decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new NetworkImage("https://cdn.intra.42.fr/coalition/cover/72/low-poly-texture-18_copy.png"),
-            fit: BoxFit.cover,
-          ),
+        image: new DecorationImage(
+          image: new NetworkImage(
+              "https://cdn.intra.42.fr/coalition/cover/72/low-poly-texture-18_copy.png"),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -123,39 +137,79 @@ class _Detail_pageState extends State<Detail_page> {
                   ),
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                 Row(
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.grey.withOpacity(0.5),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children:[
-                  Icon(Icons.mail),
-                  Text(userInfo.email),
-                   ],
-                 ),
-                 Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children:  [
-                    Icon(Icons.grade),
-                    Text((cursusdetails.grade == null) ? '' :cursusdetails.grade.toString()),
-                     ],
-                   ),
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children:[
-                     Icon(Icons.map_rounded),
-                   Text((userInfo.location == null) ? 'Unavailable' :userInfo.location.toString()),
-                   ],
-                 ),
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children:[
-                     Icon(Icons.local_atm_outlined),
-                    Text((userInfo.wallet == null) ? '' :userInfo.wallet.toString()),
-                   ],
-                 ),
-              ],
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.mail,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          userInfo.email,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.grade,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text((cursusdetails.grade == null)
+                            ? ''
+                            : cursusdetails.grade.toString()),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.map_rounded,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text((userInfo.location == null)
+                            ? 'Unavailable'
+                            : userInfo.location.toString()),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.local_atm_outlined,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          (userInfo.wallet == null)
+                              ? ''
+                              : userInfo.wallet.toString(),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               )
             ],
           ),
@@ -170,7 +224,7 @@ class _Detail_pageState extends State<Detail_page> {
                 percent: (cursusdetails.level % 1),
                 center: Text("${cursusdetails.level}%"),
                 linearStrokeCap: LinearStrokeCap.roundAll,
-                progressColor: Colors.orange[500],
+                progressColor: Colors.blueAccent,
               ),
             ],
           ),
