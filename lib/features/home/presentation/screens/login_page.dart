@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:swifty/skilles.dart';
+import 'package:swifty/features/home/presentation/services/get_user_data.dart';
 
-import 'detail_page.dart';
-import 'get_user_data.dart';
+import 'Page_details/detail_page.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _LoginState createState() => _LoginState();
 }
 
-class _HomeState extends State<Home> {
+class _LoginState extends State<Login> {
   Map<String, dynamic> info;
   bool _validate = false;
   TextEditingController searchController = TextEditingController();

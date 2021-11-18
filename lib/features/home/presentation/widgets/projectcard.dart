@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:swifty/projects_users.dart';
+import 'package:swifty/features/home/presentation/models/projects_users.dart';
 
 class ProjectCard extends StatefulWidget {
   ProjectsUsers projectsUsers;
@@ -11,12 +11,12 @@ class ProjectCard extends StatefulWidget {
 }
 
 class _ProjectCardState extends State<ProjectCard> {
-  String _cc;
+  String iconKey;
   void initState() {
     super.initState();
-    _cc = dd(widget.projectsUsers);
+    iconKey = iconValidate(widget.projectsUsers);
     if (widget.projectsUsers.finalMark == null &&
-        widget.projectsUsers.status == "finished") _cc = "failed";
+        widget.projectsUsers.status == "finished") iconKey = "failed";
   }
 
   @override
@@ -32,7 +32,6 @@ class _ProjectCardState extends State<ProjectCard> {
     };
     return Container(
       height: 100,
-      // color: Colors.orange,
       padding: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(const Radius.circular(6.0)),
@@ -66,7 +65,7 @@ class _ProjectCardState extends State<ProjectCard> {
               ),
               Expanded(
                 child: Container(
-                    alignment: Alignment.centerRight, child: icons[_cc]),
+                    alignment: Alignment.centerRight, child: icons[iconKey]),
               ),
             ],
           ),
@@ -83,7 +82,7 @@ class _ProjectCardState extends State<ProjectCard> {
   }
 }
 
-String dd(ProjectsUsers projectsUsers) {
+String iconValidate(ProjectsUsers projectsUsers) {
   if ((projectsUsers.status) == null || (projectsUsers.finalMark) == null) {
     return (projectsUsers.status);
   } else if (((projectsUsers.finalMark) == 0) &&

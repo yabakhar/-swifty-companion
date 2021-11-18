@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:swifty/home.dart';
-import 'package:swifty/stock_token.dart';
 
-import 'get_user_data.dart';
+import 'features/home/presentation/screens/login_page.dart';
+import 'features/home/presentation/services/get_token.dart';
+
+import 'package:swifty/features/home/presentation/models/stock_token.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,7 +11,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   void pintToken() async {
-    await GetUserData().gettoken();
+    await Gettoken().gettoken();
     print(stock_token.access_token);
   }
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Home(),
+      home: Login(),
     );
   }
 }

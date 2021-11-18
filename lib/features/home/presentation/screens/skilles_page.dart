@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swifty/user_info.dart';
+import 'package:swifty/features/home/presentation/models/user_info.dart';
 
 class Skilles extends StatefulWidget {
   Map info;
