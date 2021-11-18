@@ -1,5 +1,6 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:swifty/features/home/presentation/models/user_info.dart';
+import 'package:swifty/features/home/presentation/screens/Page_details/detail_page.dart';
 
 Widget header(UserInfo userInfo) {
     return Container(
@@ -16,6 +17,7 @@ Widget header(UserInfo userInfo) {
           SizedBox(
             height: 40,
           ),
+          dropDown(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
