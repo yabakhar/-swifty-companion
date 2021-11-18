@@ -37,7 +37,7 @@ class GetUserData {
         Map<String, dynamic> info = json.decode(response.body);
         return (info);
       } else {
-        throw Exception('chi haja machi s7i7a');
+        throw Exception(response.statusCode);
       }
     } catch (e) {
       print(e.toString());

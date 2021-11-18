@@ -15,22 +15,16 @@ class Detail_page extends StatefulWidget {
 
 class _Detail_pageState extends State<Detail_page> {
   UserInfo userInfo;
-  CursusDetails cursusdetails;
-  CursusDetails cursusdetails1;
-  CursusDetails cursusdetails2;
+  List<CursusDetails> cursusdetails;
   List<ProjectsUsers> projectsUsers;
-  List<SkillsDetails> skillsDetails;
   UserInfo parseInfo() {
     setState(() {
       projectsUsers = widget.info['projects_users']
           .map<ProjectsUsers>((e) => ProjectsUsers.fromJson(e))
           .toList();
       userInfo = UserInfo.fromJson(widget.info);
-      cursusdetails = CursusDetails.fromJson(widget.info['cursus_users'][0]);
-      cursusdetails1 = CursusDetails.fromJson(widget.info['cursus_users'][1]);
-      // cursusdetails2 = CursusDetails.fromJson(widget.info['cursus_users'][2]);
-      skillsDetails = widget.info['cursus_users'][0]['skills']
-          .map<SkillsDetails>((e) => SkillsDetails.fromJson(e))
+      cursusdetails = widget.info['cursus_users']
+          .map<CursusDetails>((e) => CursusDetails.fromJson(e))
           .toList();
     });
   }
@@ -38,24 +32,6 @@ class _Detail_pageState extends State<Detail_page> {
   void initState() {
     super.initState();
     parseInfo();
-    // print(widget.info.toString());
-    // print((cursusdetails.level % 1).toString());
-    // print(userInfo.toString());
-    // print(cursusdetails1.level.toString() + "= ==== = == = > > >> > > > ");
-    // print(cursusdetails.level.toString() + "= ==== = == = > > >> > > > ");
-    // print(cursusdetails2.level.toString() + "= ==== = == = > > >> > > > ");
-    // projectsUsers.forEach((element) {
-    //   print(element.project.name.toString());
-    //   print(element.status.toString());
-    //   print(element.finalMark.toString());
-    //   print("=============>>");
-    // });
-    // skillsDetails.forEach((element) {
-    //   print(element.id.toString());
-    //   print(element.name.toString());
-    //   print(element.level.toString());
-    //   print("=============>>");
-    // });
   }
 
   SliverAppBar _sliverAppBar() {
@@ -171,9 +147,9 @@ class _Detail_pageState extends State<Detail_page> {
                         SizedBox(
                           width: 20,
                         ),
-                        Text((cursusdetails.grade == null)
-                            ? ''
-                            : cursusdetails.grade.toString()),
+                        // Text((cursusdetails.grade == null)
+                        //     ? ''
+                        //     : cursusdetails.grade.toString()),
                       ],
                     ),
                     Row(
@@ -216,16 +192,16 @@ class _Detail_pageState extends State<Detail_page> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              LinearPercentIndicator(
-                width: MediaQuery.of(context).size.width - 10,
-                animation: true,
-                lineHeight: 20.0,
-                animationDuration: 1500,
-                percent: (cursusdetails.level % 1),
-                center: Text("${cursusdetails.level}%"),
-                linearStrokeCap: LinearStrokeCap.roundAll,
-                progressColor: Colors.blueAccent,
-              ),
+              // LinearPercentIndicator(
+              //   width: MediaQuery.of(context).size.width - 10,
+              //   animation: true,
+              //   lineHeight: 20.0,
+              //   animationDuration: 1500,
+              //   percent: (cursusdetails.level % 1),
+              //   center: Text("${cursusdetails.level}%"),
+              //   linearStrokeCap: LinearStrokeCap.roundAll,
+              //   progressColor: Colors.blueAccent,
+              // ),
             ],
           ),
         ],

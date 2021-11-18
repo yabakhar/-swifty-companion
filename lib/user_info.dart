@@ -24,3 +24,12 @@ class SkillsDetails {
         name = json['name'],
         level = json['level'];
 }
+
+class Cursus {
+  int id;
+  String name;
+  Cursus();
+  Cursus.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'];
+}

@@ -1,6 +1,6 @@
 class stock_token {
   static String access_token;
-  static String expires_in;
+  static int expires_in;
   static stock_token mInstance;
 
   static stock_token getInstance() {
@@ -9,12 +9,12 @@ class stock_token {
   }
 
   String get gettoken => access_token;
-  String get getexpires => expires_in;
+  int get getexpires => expires_in;
   set settoken(String value) {
     access_token = value;
   }
 
-  set setexpires(String value) {
+  set setexpires(int value) {
     expires_in = value;
   }
 }

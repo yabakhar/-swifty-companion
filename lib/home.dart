@@ -49,14 +49,11 @@ class _HomeState extends State<Home> {
           RaisedButton(
             onPressed: () async {
               info = await GetUserData().getUsers(searchController.text);
-
               if (info == null) {
-                print("ana hna");
                 setState(() {
                   _validate = true;
                 });
               } else {
-                print("ana hnas");
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -66,16 +63,6 @@ class _HomeState extends State<Home> {
             },
             child: Text("Submit"),
           ),
-          // RaisedButton(
-          //   onPressed: () async {
-          //     info = await GetUserData().getUsers("achaoua");
-          //     Navigator.push(
-          //       context,
-                // MaterialPageRoute(builder: (context) => Skilles(info: info)),
-          //     );
-          //   },
-          //   child: Text("Suddbmit"),
-          // ),
         ],
       ),
     );
