@@ -1,4 +1,5 @@
 class UserInfo {
+  String pickedCursus;
   String login;
   String email;
   String location;

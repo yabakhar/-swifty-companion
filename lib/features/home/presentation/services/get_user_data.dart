@@ -5,6 +5,7 @@ import 'package:http/retry.dart';
 import 'package:swifty/const/keys.dart';
 
 import 'package:swifty/features/home/presentation/models/stock_token.dart';
+
 class GetUserData {
   Map<String, String> body = {
     'Authorization': 'Bearer ' + stock_token.access_token,
@@ -16,6 +17,8 @@ class GetUserData {
       final response = await client.get(
           Uri.parse('https://api.intra.42.fr/v2/users/' + login),
           headers: body);
+      print(response.statusCode);
+
       if (response.statusCode == 200) {
         Map<String, dynamic> info = json.decode(response.body);
         return (info);
