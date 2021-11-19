@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:swifty/features/home/presentation/models/user_info.dart';
-import 'package:swifty/features/home/presentation/screens/Page_details/detail_page.dart';
+import 'package:swifty/features/home/presentation/screens/Page_details/widgets/details_page_widget.dart';
 
-Widget header(UserInfo userInfo) {
+import '../detail_page.dart';
+
+class Header extends StatefulWidget {
+  Function(String) changeCursusState;
+  final UserInfo userInfo;
+  Header({Key key, this.userInfo, this.changeCursusState}) : super(key: key);
+
+  @override
+  _HeaderState createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: new BoxDecoration(
         image: new DecorationImage(
@@ -17,7 +30,7 @@ Widget header(UserInfo userInfo) {
           SizedBox(
             height: 40,
           ),
-          dropDown(),
+          dropDawn(widget.changeCursusState),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -25,7 +38,7 @@ Widget header(UserInfo userInfo) {
                 children: [
                   CircleAvatar(
                     radius: 60.0,
-                    backgroundImage: NetworkImage(userInfo.imageUrl),
+                    backgroundImage: NetworkImage(widget.userInfo.imageUrl),
                     backgroundColor: Colors.transparent,
                   ),
                 ],
@@ -50,7 +63,7 @@ Widget header(UserInfo userInfo) {
                           width: 20,
                         ),
                         Text(
-                          userInfo.email,
+                          widget.userInfo.email,
                         ),
                       ],
                     ),
@@ -79,9 +92,9 @@ Widget header(UserInfo userInfo) {
                         SizedBox(
                           width: 20,
                         ),
-                        Text((userInfo.location == null)
+                        Text((widget.userInfo.location == null)
                             ? 'Unavailable'
-                            : userInfo.location.toString()),
+                            : widget.userInfo.location.toString()),
                       ],
                     ),
                     Row(
@@ -95,9 +108,9 @@ Widget header(UserInfo userInfo) {
                           width: 20,
                         ),
                         Text(
-                          (userInfo.wallet == null)
+                          (widget.userInfo.wallet == null)
                               ? ''
-                              : userInfo.wallet.toString(),
+                              : widget.userInfo.wallet.toString(),
                         ),
                       ],
                     ),
@@ -125,25 +138,51 @@ Widget header(UserInfo userInfo) {
       ),
     );
   }
-SliverAppBar sliverAppBar(UserInfo userInfo) 
-{
-    return SliverAppBar(
-      title: Center(
-        child: Text(userInfo.login,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: "greycliff-cf-regular")),
+
+  Widget dropDawn(Function(String) changeCursusState) {
+    return DropdownButton<String>(
+      value: widget.userInfo.pickedCursus,
+      icon: const Icon(Icons.arrow_downward),
+      iconSize: 24,
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
       ),
-      expandedHeight: 300.0,
-      floating: false,
-      pinned: true,
-      snap: false,
-      elevation: 50,
-      flexibleSpace: FlexibleSpaceBar(
-        centerTitle: true,
-        background: header(userInfo),
-      ),
+      onChanged: (newValue) {
+        changeCursusState(newValue);
+      },
+      items:
+          <String>['0', '1', '2'].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
+  }
+}
+
+SliverAppBar sliverAppBar(userInfo, Function(String) changeCursusState) {
+  return SliverAppBar(
+    title: Center(
+      child: Text(userInfo.login,
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: "greycliff-cf-regular")),
+    ),
+    expandedHeight: 300.0,
+    floating: false,
+    pinned: true,
+    snap: false,
+    elevation: 50,
+    flexibleSpace: FlexibleSpaceBar(
+      centerTitle: true,
+      background:
+          Header(userInfo: userInfo, changeCursusState: changeCursusState),
+    ),
+  );
 }
