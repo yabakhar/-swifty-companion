@@ -1,4 +1,5 @@
 import 'package:swifty/features/home/presentation/models/user_info.dart';
+
 class CursusDetails {
   String grade;
   double level;

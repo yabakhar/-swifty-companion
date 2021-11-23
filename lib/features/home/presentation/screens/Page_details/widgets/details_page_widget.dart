@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:swifty/features/home/presentation/models/cursus_details.dart';
 import 'package:swifty/features/home/presentation/models/user_info.dart';
 import 'package:swifty/features/home/presentation/screens/Page_details/widgets/details_page_widget.dart';
 
@@ -6,9 +8,10 @@ import '../detail_page.dart';
 
 class Header extends StatefulWidget {
   Function(String) changeCursusState;
+  final CursusDetails cursusDetails;
   final UserInfo userInfo;
-  Header({Key key, this.userInfo, this.changeCursusState}) : super(key: key);
-
+  Header({Key key, this.userInfo, this.changeCursusState, this.cursusDetails})
+      : super(key: key);
   @override
   _HeaderState createState() => _HeaderState();
 }
@@ -16,6 +19,7 @@ class Header extends StatefulWidget {
 class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
+    print(widget.cursusDetails.level);
     return Container(
       decoration: new BoxDecoration(
         image: new DecorationImage(
@@ -77,9 +81,9 @@ class _HeaderState extends State<Header> {
                         SizedBox(
                           width: 20,
                         ),
-                        // Text((cursusdetails.grade == null)
-                        //     ? ''
-                        //     : cursusdetails.grade.toString()),
+                        Text((widget.cursusDetails.grade == null)
+                            ? ''
+                            : widget.cursusDetails.grade.toString()),
                       ],
                     ),
                     Row(
@@ -122,16 +126,16 @@ class _HeaderState extends State<Header> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // LinearPercentIndicator(
-              //   width: MediaQuery.of(context).size.width - 10,
-              //   animation: true,
-              //   lineHeight: 20.0,
-              //   animationDuration: 1500,
-              //   percent: (cursusdetails.level % 1),
-              //   center: Text("${cursusdetails.level}%"),
-              //   linearStrokeCap: LinearStrokeCap.roundAll,
-              //   progressColor: Colors.blueAccent,
-              // ),
+              LinearPercentIndicator(
+                width: MediaQuery.of(context).size.width - 10,
+                animation: true,
+                lineHeight: 20.0,
+                animationDuration: 1500,
+                percent: (widget.cursusDetails.level % 1),
+                center: Text("${widget.cursusDetails.level}%"),
+                linearStrokeCap: LinearStrokeCap.roundAll,
+                progressColor: Colors.blueAccent,
+              ),
             ],
           ),
         ],
@@ -153,8 +157,8 @@ class _HeaderState extends State<Header> {
       onChanged: (newValue) {
         changeCursusState(newValue);
       },
-      items:
-          <String>['0', '1', '2'].map<DropdownMenuItem<String>>((String value) {
+      items: <String>['42', '42cursus', 'Piscine C décloisonnée']
+          .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
@@ -164,7 +168,8 @@ class _HeaderState extends State<Header> {
   }
 }
 
-SliverAppBar sliverAppBar(userInfo, Function(String) changeCursusState) {
+SliverAppBar sliverAppBar(
+    userInfo, Function(String) changeCursusState, cursusDetails) {
   return SliverAppBar(
     title: Center(
       child: Text(userInfo.login,
@@ -181,8 +186,10 @@ SliverAppBar sliverAppBar(userInfo, Function(String) changeCursusState) {
     elevation: 50,
     flexibleSpace: FlexibleSpaceBar(
       centerTitle: true,
-      background:
-          Header(userInfo: userInfo, changeCursusState: changeCursusState),
+      background: Header(
+          userInfo: userInfo,
+          changeCursusState: changeCursusState,
+          cursusDetails: cursusDetails),
     ),
   );
 }
