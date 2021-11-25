@@ -11,16 +11,15 @@ class ProjectCard extends StatefulWidget {
 }
 
 class _ProjectCardState extends State<ProjectCard> {
-  String iconKey;
+  @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    iconKey = iconValidate(widget.projectsUsers);
-    if (widget.projectsUsers.finalMark == null &&
-        widget.projectsUsers.status == "finished") iconKey = "failed";
   }
 
   @override
   Widget build(BuildContext context) {
+    String iconKey;
     Map<String, Object> icons = {
       "in_progress": Icon(Icons.timelapse, color: Colors.orange),
       "waiting_for_correction": Icon(Icons.timelapse, color: Colors.orange),
@@ -30,6 +29,9 @@ class _ProjectCardState extends State<ProjectCard> {
       "creating_group": Icon(Icons.timelapse, color: Colors.orange),
       "valid": Text(widget.projectsUsers.finalMark.toString())
     };
+    iconKey = iconValidate(widget.projectsUsers);
+    if (widget.projectsUsers.finalMark == null &&
+        widget.projectsUsers.status == "finished") iconKey = "failed";
     return Container(
       height: 100,
       padding: EdgeInsets.symmetric(horizontal: 20),

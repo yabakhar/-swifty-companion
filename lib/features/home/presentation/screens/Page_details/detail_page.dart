@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:swifty/features/home/presentation/models/cursus_details.dart';
 import 'package:swifty/features/home/presentation/models/projects_users.dart';
 import 'package:swifty/features/home/presentation/models/user_info.dart';
-import 'package:swifty/features/home/presentation/screens/Page_details/widgets/details_page_widget.dart';
+import 'package:swifty/features/home/presentation/screens/Page_details/widgets/header.dart';
 import 'package:swifty/features/home/presentation/screens/Page_details/widgets/projectcard.dart';
 import 'package:swifty/features/home/presentation/screens/skilles_page.dart';
 
@@ -16,10 +16,11 @@ class Detail_page extends StatefulWidget {
 
 class _Detail_pageState extends State<Detail_page> {
   UserInfo userInfo;
+  int jj = 0;
   List<Cursus> cursus = [];
+  List<String> ss = [];
   List<CursusDetails> cursusdetails;
   Map<String, int> dropDownValue = {};
-  static List ss = [];
   List<ProjectsUsers> projectsUsers;
   UserInfo parseInfo() {
     setState(() {
@@ -31,7 +32,7 @@ class _Detail_pageState extends State<Detail_page> {
           .map<CursusDetails>((e) => CursusDetails.fromJson(e))
           .toList();
       fillDropDawn();
-      userInfo.pickedCursus = cursus[0].name;
+      userInfo.pickedCursus = (cursus.isEmpty) ? "" : cursus[0].name;
     });
   }
 
@@ -43,7 +44,6 @@ class _Detail_pageState extends State<Detail_page> {
     cursus.forEach((element) {
       dropDownValue[element.name] = element.id;
       ss.add(element.name);
-      print(element.name);
     });
   }
 
@@ -60,40 +60,30 @@ class _Detail_pageState extends State<Detail_page> {
 
   @override
   Widget build(BuildContext context) {
-    print(getIndexCursus(userInfo.pickedCursus, cursus).toString() +
-        "++++++++++++");
     return new Scaffold(
         body: DefaultTabController(
             length: 2,
             child: TabBarView(children: [
               CustomScrollView(
                 slivers: <Widget>[
-                  sliverAppBar(
-                      userInfo,
-                      changeCursusState,
-                      cursusdetails[
-                          getIndexCursus(userInfo.pickedCursus, cursus)]),
+                  sliverAppBar(userInfo, changeCursusState,
+                      getIndexCursus(userInfo.pickedCursus), ss),
                   SliverList(
                       delegate: new SliverChildListDelegate(
                           _buildListPost(projectsUsers))),
                 ],
               ),
               Skilles(
-                  skillsDetails: cursusdetails[
-                          getIndexCursus(userInfo.pickedCursus, cursus)]
-                      .skills),
+                  skillsDetails: getIndexCursus(userInfo.pickedCursus)?.skills),
             ])));
   }
 
-  int getIndexCursus(String value, List<Cursus> cursus) {
-    int i = 0;
-    cursus.forEach((element) {
-      if (value == element.name) {
-        return (i);
-      }
-      i++;
+  CursusDetails getIndexCursus(String value) {
+    setState(() {
+      jj = cursusdetails.indexWhere((element) => element.cursus.name == value);
     });
-    return (i);
+    if (jj < 0) return (null);
+    return (cursusdetails[jj]);
   }
 
   List _buildListPost(List<ProjectsUsers> projectsUsers) {

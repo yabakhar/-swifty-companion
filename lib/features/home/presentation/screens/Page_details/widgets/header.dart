@@ -2,24 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swifty/features/home/presentation/models/cursus_details.dart';
 import 'package:swifty/features/home/presentation/models/user_info.dart';
-import 'package:swifty/features/home/presentation/screens/Page_details/widgets/details_page_widget.dart';
-
-import '../detail_page.dart';
 
 class Header extends StatefulWidget {
   Function(String) changeCursusState;
+  final List<String> dropDowwnValue;
   final CursusDetails cursusDetails;
   final UserInfo userInfo;
-  Header({Key key, this.userInfo, this.changeCursusState, this.cursusDetails})
+  Header(
+      {Key key,
+      this.userInfo,
+      this.changeCursusState,
+      this.cursusDetails,
+      this.dropDowwnValue})
       : super(key: key);
   @override
   _HeaderState createState() => _HeaderState();
 }
 
 class _HeaderState extends State<Header> {
+  bool _loadImageError = false;
   @override
   Widget build(BuildContext context) {
-    print(widget.cursusDetails.level);
+    double level = (widget.cursusDetails?.level == null)
+        ? 0.0
+        : widget.cursusDetails.level;
     return Container(
       decoration: new BoxDecoration(
         image: new DecorationImage(
@@ -41,10 +47,17 @@ class _HeaderState extends State<Header> {
               Column(
                 children: [
                   CircleAvatar(
-                    radius: 60.0,
-                    backgroundImage: NetworkImage(widget.userInfo.imageUrl),
-                    backgroundColor: Colors.transparent,
-                  ),
+                      radius: 60.0,
+                      backgroundImage: NetworkImage(widget.userInfo.imageUrl),
+                      backgroundColor: Colors.transparent,
+                      onBackgroundImageError: (_, __) {
+                        setState(() {
+                          _loadImageError = true;
+                        });
+                      },
+                      child: this._loadImageError
+                          ? Icon(Icons.refresh_rounded)
+                          : null),
                 ],
               ),
               Container(
@@ -81,9 +94,9 @@ class _HeaderState extends State<Header> {
                         SizedBox(
                           width: 20,
                         ),
-                        Text((widget.cursusDetails.grade == null)
+                        Text((widget.cursusDetails?.grade == null)
                             ? ''
-                            : widget.cursusDetails.grade.toString()),
+                            : widget.cursusDetails?.grade.toString()),
                       ],
                     ),
                     Row(
@@ -131,8 +144,8 @@ class _HeaderState extends State<Header> {
                 animation: true,
                 lineHeight: 20.0,
                 animationDuration: 1500,
-                percent: (widget.cursusDetails.level % 1),
-                center: Text("${widget.cursusDetails.level}%"),
+                percent: (level % 1),
+                center: Text("${level.toStringAsFixed(2)}%"),
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.blueAccent,
               ),
@@ -146,19 +159,19 @@ class _HeaderState extends State<Header> {
   Widget dropDawn(Function(String) changeCursusState) {
     return DropdownButton<String>(
       value: widget.userInfo.pickedCursus,
-      icon: const Icon(Icons.arrow_downward),
+      icon: const Icon(Icons.arrow_downward, color: Colors.blue),
       iconSize: 24,
       elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
+      style: const TextStyle(color: Colors.blue),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Colors.blue,
       ),
       onChanged: (newValue) {
         changeCursusState(newValue);
       },
-      items: <String>['42', '42cursus', 'Piscine C décloisonnée']
-          .map<DropdownMenuItem<String>>((String value) {
+      items:
+          widget.dropDowwnValue.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
@@ -168,8 +181,8 @@ class _HeaderState extends State<Header> {
   }
 }
 
-SliverAppBar sliverAppBar(
-    userInfo, Function(String) changeCursusState, cursusDetails) {
+SliverAppBar sliverAppBar(userInfo, Function(String) changeCursusState,
+    cursusDetails, dropDownValue) {
   return SliverAppBar(
     title: Center(
       child: Text(userInfo.login,
@@ -188,6 +201,7 @@ SliverAppBar sliverAppBar(
       centerTitle: true,
       background: Header(
           userInfo: userInfo,
+          dropDowwnValue: dropDownValue,
           changeCursusState: changeCursusState,
           cursusDetails: cursusDetails),
     ),

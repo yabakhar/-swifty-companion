@@ -13,7 +13,6 @@ class Gettoken {
       final response = await client.post(
           Uri.parse('https://api.intra.42.fr/oauth/token'),
           body: bodytoken);
-      print(response.statusCode);
 
       if (response.statusCode == 200) {
         Map<String, dynamic> info = json.decode(response.body);

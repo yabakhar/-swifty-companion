@@ -14,9 +14,11 @@ class _SkillesState extends State<Skilles> {
   void initState() {
     super.initState();
     dd = List<Widget>();
-    widget.skillsDetails.forEach((element) {
-      dd.add(cc(element));
-    });
+    if (widget.skillsDetails != null) {
+      widget.skillsDetails.forEach((element) {
+        dd.add(cc(element));
+      });
+    }
   }
 
   @override
@@ -40,6 +42,7 @@ class _SkillesState extends State<Skilles> {
 }
 
 Widget cc(SkillsDetails element) {
+  double level = (element?.level == null) ? 0.0 : element.level;
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
@@ -59,7 +62,7 @@ Widget cc(SkillsDetails element) {
               fontFamily: "greycliff-cf-regular"),
         ),
         Text(
-          element.level.toString(),
+          level.toStringAsFixed(2),
           textAlign: TextAlign.center,
         ),
       ],

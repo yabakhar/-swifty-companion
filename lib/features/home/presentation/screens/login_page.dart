@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:swifty/features/home/presentation/services/get_user_data.dart';
-
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'Page_details/detail_page.dart';
 
 class Login extends StatefulWidget {
@@ -12,12 +14,18 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   Map<String, dynamic> info;
+
   bool _validate = false;
   TextEditingController searchController = TextEditingController();
   @override
   void dispose() {
     searchController.dispose();
     super.dispose();
+  }
+
+  Future<bool> loginAction() async {
+    await new Future.delayed(const Duration(seconds: 3));
+    return true;
   }
 
   @override
@@ -53,7 +61,15 @@ class _LoginState extends State<Login> {
                   _validate = true;
                 });
               } else {
-             
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    });
+                await loginAction();
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
