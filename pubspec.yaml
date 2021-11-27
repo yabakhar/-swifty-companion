@@ -29,8 +29,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http:
+  flutter_web_auth: ^0.3.1
   percent_indicator:
-  flutter_easyloading: ^3.0.3
+  shared_preferences:
   flutter_animation_progress_bar:
   spider_chart: ^0.1.5
 dev_dependencies:

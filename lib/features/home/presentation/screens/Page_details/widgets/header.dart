@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:swifty/const/avatar.dart';
 import 'package:swifty/features/home/presentation/models/cursus_details.dart';
 import 'package:swifty/features/home/presentation/models/user_info.dart';
 
@@ -21,8 +22,11 @@ class Header extends StatefulWidget {
 
 class _HeaderState extends State<Header> {
   bool _loadImageError = false;
+
   @override
   Widget build(BuildContext context) {
+    TextStyle _textStyle = TextStyle(
+        color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700);
     double level = (widget.cursusDetails?.level == null)
         ? 0.0
         : widget.cursusDetails.level;
@@ -47,87 +51,95 @@ class _HeaderState extends State<Header> {
               Column(
                 children: [
                   CircleAvatar(
-                      radius: 60.0,
-                      backgroundImage: NetworkImage(widget.userInfo.imageUrl),
-                      backgroundColor: Colors.transparent,
-                      onBackgroundImageError: (_, __) {
-                        setState(() {
-                          _loadImageError = true;
-                        });
-                      },
-                      child: this._loadImageError
-                          ? Icon(Icons.refresh_rounded)
-                          : null),
+                    radius: 60.0,
+                    backgroundImage: NetworkImage(
+                        (widget.userInfo.imageUrl == null)
+                            ? avatar
+                            : widget.userInfo.imageUrl),
+                    backgroundColor: Colors.transparent,
+                  ),
                 ],
               ),
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                   color: Colors.grey.withOpacity(0.5),
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.mail,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
                         Text(
                           widget.userInfo.email,
+                          style: _textStyle,
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Icon(
+                          Icons.mail,
+                          color: Colors.purple[300],
+                          size: 30,
                         ),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Text(
+                          (widget.cursusDetails?.grade == null)
+                              ? ''
+                              : widget.cursusDetails?.grade.toString(),
+                          style: _textStyle,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
                         Icon(
                           Icons.grade,
-                          color: Colors.white,
+                          color: Colors.purple[300],
+                          size: 30,
                         ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text((widget.cursusDetails?.grade == null)
-                            ? ''
-                            : widget.cursusDetails?.grade.toString()),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Text(
+                          (widget.userInfo.location == null)
+                              ? 'Unavailable'
+                              : widget.userInfo.location.toString(),
+                          style: _textStyle,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
                         Icon(
                           Icons.map_rounded,
-                          color: Colors.white,
+                          color: Colors.purple[300],
+                          size: 30,
                         ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text((widget.userInfo.location == null)
-                            ? 'Unavailable'
-                            : widget.userInfo.location.toString()),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.local_atm_outlined,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
                         Text(
                           (widget.userInfo.wallet == null)
                               ? ''
                               : widget.userInfo.wallet.toString(),
+                          style: _textStyle,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Icon(
+                          Icons.local_atm_outlined,
+                          color: Colors.purple[300],
+                          size: 30,
                         ),
                       ],
                     ),

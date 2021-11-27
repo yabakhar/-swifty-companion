@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:swifty/features/home/presentation/services/get_user_data.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'Page_details/detail_page.dart';
 
 class Login extends StatefulWidget {
