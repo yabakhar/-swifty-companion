@@ -2,39 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:swifty/features/home/presentation/models/user_info.dart';
 
 class Skilles extends StatefulWidget {
-  Map info;
-  Skilles({this.info, key}) : super(key: key);
+  final List<SkillsDetails> skillsDetails;
+  Skilles({this.skillsDetails, key}) : super(key: key);
 
   @override
   _SkillesState createState() => _SkillesState();
 }
 
 class _SkillesState extends State<Skilles> {
-  List<SkillsDetails> skillsDetails;
-  List<String> name;
   List<Widget> dd;
-  List<double> levle;
-  double max_value = 0;
-  UserInfo parseInfo() {
-    setState(() {
-      skillsDetails = widget.info['cursus_users'][0]['skills']
-              .map<SkillsDetails>((e) => SkillsDetails.fromJson(e))
-              .toList() ??
-          [];
-    });
-  }
-
   void initState() {
     super.initState();
-    parseInfo();
-    levle = List<double>();
-    name = List<String>();
     dd = List<Widget>();
-
-    print(skillsDetails.length);
-    skillsDetails.forEach((element) {
-      dd.add(cc(element));
-    });
+    if (widget.skillsDetails != null) {
+      widget.skillsDetails.forEach((element) {
+        dd.add(cc(element));
+      });
+    }
   }
 
   @override
@@ -58,6 +42,7 @@ class _SkillesState extends State<Skilles> {
 }
 
 Widget cc(SkillsDetails element) {
+  double level = (element?.level == null) ? 0.0 : element.level;
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
@@ -77,7 +62,7 @@ Widget cc(SkillsDetails element) {
               fontFamily: "greycliff-cf-regular"),
         ),
         Text(
-          element.level.toString(),
+          level.toStringAsFixed(2),
           textAlign: TextAlign.center,
         ),
       ],

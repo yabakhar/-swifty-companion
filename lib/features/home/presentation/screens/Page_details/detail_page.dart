@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:swifty/features/home/presentation/models/cursus_details.dart';
 import 'package:swifty/features/home/presentation/models/projects_users.dart';
 import 'package:swifty/features/home/presentation/models/user_info.dart';
-import 'package:swifty/features/home/presentation/screens/Page_details/widgets/details_page_widget.dart';
+import 'package:swifty/features/home/presentation/screens/Page_details/widgets/header.dart';
 import 'package:swifty/features/home/presentation/screens/Page_details/widgets/projectcard.dart';
 import 'package:swifty/features/home/presentation/screens/skilles_page.dart';
 
 class Detail_page extends StatefulWidget {
   Map info;
+
   Detail_page({this.info, key}) : super(key: key);
   @override
   _Detail_pageState createState() => _Detail_pageState();
@@ -15,7 +16,11 @@ class Detail_page extends StatefulWidget {
 
 class _Detail_pageState extends State<Detail_page> {
   UserInfo userInfo;
+  int jj = 0;
+  List<Cursus> cursus = [];
+  List<String> ss = [];
   List<CursusDetails> cursusdetails;
+  Map<String, int> dropDownValue = {};
   List<ProjectsUsers> projectsUsers;
   UserInfo parseInfo() {
     setState(() {
@@ -23,16 +28,28 @@ class _Detail_pageState extends State<Detail_page> {
           .map<ProjectsUsers>((e) => ProjectsUsers.fromJson(e))
           .toList();
       userInfo = UserInfo.fromJson(widget.info);
-      userInfo.pickedCursus = "0";
       cursusdetails = widget.info['cursus_users']
           .map<CursusDetails>((e) => CursusDetails.fromJson(e))
           .toList();
+      filldropDown();
+      userInfo.pickedCursus = (cursus.isEmpty) ? "" : cursus[0].name;
     });
   }
 
-  void changeCursusState(String new_value) {
+  void filldropDown() {
+    cursusdetails.forEach((element) {
+      cursus.add(element.cursus);
+    });
+    cursus.toSet();
+    cursus.forEach((element) {
+      dropDownValue[element.name] = element.id;
+      ss.add(element.name);
+    });
+  }
+
+  void changeCursusState(String newValue) {
     setState(() {
-      userInfo.pickedCursus = new_value;
+      userInfo.pickedCursus = newValue;
     });
   }
 
@@ -49,24 +66,38 @@ class _Detail_pageState extends State<Detail_page> {
             child: TabBarView(children: [
               CustomScrollView(
                 slivers: <Widget>[
-                  sliverAppBar(userInfo, changeCursusState),
+                  sliverAppBar(userInfo, changeCursusState,
+                      getIndexCursus(userInfo.pickedCursus), ss,context),
                   SliverList(
+                    
                       delegate: new SliverChildListDelegate(
+                      
                           _buildListPost(projectsUsers))),
                 ],
               ),
-              Skilles(info: widget.info),
+              Skilles(
+                  skillsDetails: getIndexCursus(userInfo.pickedCursus)?.skills),
             ])));
+  }
+
+  CursusDetails getIndexCursus(String value) {
+    setState(() {
+      jj = cursusdetails.indexWhere((element) => element.cursus.name == value);
+    });
+    if (jj < 0) return (null);
+    return (cursusdetails[jj]);
   }
 
   List _buildListPost(List<ProjectsUsers> projectsUsers) {
     List<Widget> listItems = [];
     for (int i = 0; i < projectsUsers.length; i++) {
-      listItems.add(InkWell(
-          child: new Padding(
-        padding: new EdgeInsets.all(8.0),
-        child: ProjectCard(projectsUsers: projectsUsers[i]),
-      )));
+      if (projectsUsers[i].cursusIds.contains(dropDownValue[userInfo.pickedCursus])) {
+        listItems.add(InkWell(
+            child: new Padding(
+          padding: new EdgeInsets.all(8.0),
+          child: ProjectCard(projectsUsers: projectsUsers[i]),
+        )));
+      }
     }
     return listItems;
   }
