@@ -6,7 +6,6 @@ class GetAutorized {
     final result = await FlutterWebAuth.authenticate(
         url: urlfactory(), callbackUrlScheme: "swifty");
     final code = Uri.parse(result).queryParameters['code'];
-    print("======================>" + code);
     return (code);
   }
 

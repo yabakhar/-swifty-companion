@@ -67,11 +67,9 @@ class _Detail_pageState extends State<Detail_page> {
               CustomScrollView(
                 slivers: <Widget>[
                   sliverAppBar(userInfo, changeCursusState,
-                      getIndexCursus(userInfo.pickedCursus), ss,context),
+                      getIndexCursus(userInfo.pickedCursus), ss, context),
                   SliverList(
-                    
                       delegate: new SliverChildListDelegate(
-                      
                           _buildListPost(projectsUsers))),
                 ],
               ),
@@ -91,7 +89,9 @@ class _Detail_pageState extends State<Detail_page> {
   List _buildListPost(List<ProjectsUsers> projectsUsers) {
     List<Widget> listItems = [];
     for (int i = 0; i < projectsUsers.length; i++) {
-      if (projectsUsers[i].cursusIds.contains(dropDownValue[userInfo.pickedCursus])) {
+      if (projectsUsers[i]
+          .cursusIds
+          .contains(dropDownValue[userInfo.pickedCursus])) {
         listItems.add(InkWell(
             child: new Padding(
           padding: new EdgeInsets.all(8.0),

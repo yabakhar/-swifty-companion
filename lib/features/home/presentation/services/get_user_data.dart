@@ -2,22 +2,50 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
+import 'package:swifty/features/home/presentation/models/simple_preferences.dart';
+import 'package:swifty/features/home/presentation/services/get_autorized.dart';
 
 import 'package:swifty/features/home/presentation/models/stock_token.dart';
+import 'package:swifty/features/home/presentation/services/get_token.dart';
 
 class GetUserData {
-  Map<String, String> body = {
-    'Authorization': 'Bearer ' + stock_token.access_token,
-  };
+  GetAutorized getAutorized = GetAutorized();
+  Map<String, String> headerInfo(String access_token) => {
+        'Authorization': 'Bearer ' + access_token,
+      };
+
+  Future<String> getAuthenticate() async {
+    return await getAutorized.authenticate();
+  }
+
+  bool checkExistAndExpiredToken(stock_token access_token) {
+    DateTime currentPhoneDate = DateTime.now();
+    if (access_token.access_token != null) {
+      var time_experation =
+          DateTime.fromMillisecondsSinceEpoch(access_token.created_at * 1000);
+      time_experation =
+          time_experation.add(Duration(seconds: access_token.expires_in));
+      return currentPhoneDate.isAfter(time_experation);
+    }
+    return false;
+  }
 
   Future<Map> getUsers(String login) async {
+    stock_token access_token;
     final client = RetryClient(http.Client());
     try {
+      final cachedToken = await SimplePreferences.getCachedToken();
+      if (checkExistAndExpiredToken(cachedToken) == true) {
+        String code = await getAuthenticate();
+        print("code ========= > " +
+            code +
+            "===== >  " +
+            cachedToken.access_token);
+        access_token = await Gettoken().gettoken(code);
+      }
       final response = await client.get(
           Uri.parse('https://api.intra.42.fr/v2/users/' + login),
-          headers: body);
-      print(response.statusCode);
-
+          headers: headerInfo(access_token.access_token));
       if (response.statusCode == 200) {
         Map<String, dynamic> info = json.decode(response.body);
         return (info);

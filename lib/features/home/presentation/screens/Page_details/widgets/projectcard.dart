@@ -33,6 +33,7 @@ class _ProjectCardState extends State<ProjectCard> {
     if (widget.projectsUsers.finalMark == null &&
         widget.projectsUsers.status == "finished") iconKey = "failed";
     return Container(
+      
       height: 100,
       padding: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(

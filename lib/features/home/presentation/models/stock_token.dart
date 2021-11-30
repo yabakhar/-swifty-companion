@@ -1,17 +1,34 @@
 class stock_token {
-  static String access_token;
-  static int expires_in;
-  static stock_token mInstance;
-  static String autorized_token;
+  String access_token;
+  int expires_in;
+  int created_at;
+  String autorized_token;
 
-  static stock_token getInstance() {
-    if (mInstance == null) mInstance = new stock_token();
-    return mInstance;
+  stock_token(
+      {this.access_token,
+      this.autorized_token,
+      this.created_at,
+      this.expires_in});
+
+  factory stock_token.fromJson(Map<String, dynamic> json, {String code}) {
+    return stock_token(
+      access_token: json['access_token'],
+      expires_in: json['expires_in'],
+      created_at: json['created_at'],
+      autorized_token: code,
+    );
   }
+
+  Map<String, dynamic> tojson() => {
+        "access_token": access_token,
+        "expires_in": expires_in,
+        "created_at": created_at
+      };
 
   String get gettoken => access_token;
   String get getautorizedtoken => autorized_token;
   int get getexpires => expires_in;
+
   set settoken(String value) {
     access_token = value;
   }

@@ -176,6 +176,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "progress_state_button",
+      "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/progress_state_button-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "shared_preferences",
       "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-2.0.7",
       "packageUri": "lib/",
@@ -290,7 +296,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-11-28T14:45:30.137553Z",
+  "generated": "2021-11-29T19:59:23.065682Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

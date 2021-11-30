@@ -1,0 +1,4 @@
+#Tue Nov 30 00:21:02 WEST 2021
+base.0=/Users/yabakhar/Desktop/swifty-companion/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
