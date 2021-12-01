@@ -42,9 +42,9 @@ class _HeaderState extends State<Header> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 50),
+            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 15),
             height: MediaQuery.of(context).size.height / 4.5,
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: Colors.black.withOpacity(0.5),
@@ -159,6 +159,7 @@ class _HeaderState extends State<Header> {
 
 SliverAppBar sliverAppBar(userInfo, Function(String) changeCursusState,
     cursusDetails, dropDownValue, context) {
+      bool isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
   return SliverAppBar(
     title: Center(
       child: Text(userInfo.login,
@@ -168,7 +169,7 @@ SliverAppBar sliverAppBar(userInfo, Function(String) changeCursusState,
               fontWeight: FontWeight.bold,
               fontFamily: "greycliff-cf-regular")),
     ),
-    expandedHeight: MediaQuery.of(context).size.height / 2.5,
+    expandedHeight: (isPortrait) ? MediaQuery.of(context).size.height/ 2.5:MediaQuery.of(context).size.height /1.80,
     floating: false,
     pinned: true,
     snap: false,

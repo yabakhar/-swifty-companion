@@ -65,7 +65,6 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: TextField(
-                  
                   style: _textStyleValue,
                   cursorColor: Color(0xff3a305b),
                   controller: searchController,
