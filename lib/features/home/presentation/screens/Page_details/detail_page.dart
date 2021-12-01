@@ -16,9 +16,9 @@ class Detail_page extends StatefulWidget {
 
 class _Detail_pageState extends State<Detail_page> {
   UserInfo userInfo;
-  int jj = 0;
+  int index = 0;
   List<Cursus> cursus = [];
-  List<String> ss = [];
+  List<String> dropdown = [];
   List<CursusDetails> cursusdetails;
   Map<String, int> dropDownValue = {};
   List<ProjectsUsers> projectsUsers;
@@ -43,7 +43,7 @@ class _Detail_pageState extends State<Detail_page> {
     cursus.toSet();
     cursus.forEach((element) {
       dropDownValue[element.name] = element.id;
-      ss.add(element.name);
+      dropdown.add(element.name);
     });
   }
 
@@ -67,7 +67,7 @@ class _Detail_pageState extends State<Detail_page> {
               CustomScrollView(
                 slivers: <Widget>[
                   sliverAppBar(userInfo, changeCursusState,
-                      getIndexCursus(userInfo.pickedCursus), ss, context),
+                      getIndexCursus(userInfo.pickedCursus), dropdown, context),
                   SliverList(
                       delegate: new SliverChildListDelegate(
                           _buildListPost(projectsUsers))),
@@ -80,10 +80,11 @@ class _Detail_pageState extends State<Detail_page> {
 
   CursusDetails getIndexCursus(String value) {
     setState(() {
-      jj = cursusdetails.indexWhere((element) => element.cursus.name == value);
+      index = cursusdetails.indexWhere((element) => element.cursus.name == value);
     });
-    if (jj < 0) return (null);
-    return (cursusdetails[jj]);
+    if (index < 0) 
+      return (null);
+    return (cursusdetails[index]);
   }
 
   List _buildListPost(List<ProjectsUsers> projectsUsers) {

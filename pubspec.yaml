@@ -32,9 +32,10 @@ dependencies:
   flutter_web_auth: ^0.3.1
   percent_indicator:
   shared_preferences:
+  flutter_svg: ^0.19.3
   flutter_animation_progress_bar:
-  spider_chart: ^0.1.5
-  progress_state_button:
+  data_connection_checker:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -51,10 +52,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
+  assets:
+      - lib/assets/images/42_logo.svg
+      - lib/assets/images/background.png
+      - lib/assets/images/defult_avatar.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

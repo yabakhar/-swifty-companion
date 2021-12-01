@@ -10,12 +10,11 @@ class stock_token {
       this.created_at,
       this.expires_in});
 
-  factory stock_token.fromJson(Map<String, dynamic> json, {String code}) {
+  factory stock_token.fromJson(Map<String, dynamic> json) {
     return stock_token(
       access_token: json['access_token'],
       expires_in: json['expires_in'],
       created_at: json['created_at'],
-      autorized_token: code,
     );
   }
 

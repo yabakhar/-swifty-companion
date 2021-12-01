@@ -20,7 +20,7 @@ class GetUserData {
 
   bool checkExistAndExpiredToken(stock_token access_token) {
     DateTime currentPhoneDate = DateTime.now();
-    if (access_token.access_token != null) {
+    if (access_token != null) {
       var time_experation =
           DateTime.fromMillisecondsSinceEpoch(access_token.created_at * 1000);
       time_experation =
@@ -34,18 +34,18 @@ class GetUserData {
     stock_token access_token;
     final client = RetryClient(http.Client());
     try {
-      final cachedToken = await SimplePreferences.getCachedToken();
-      if (checkExistAndExpiredToken(cachedToken) == true) {
+      stock_token cachedToken = await SimplePreferences.getCachedToken();
+      bool expiredToken = checkExistAndExpiredToken(cachedToken);
+      if (cachedToken == null ||
+          checkExistAndExpiredToken(cachedToken) == true) {
         String code = await getAuthenticate();
-        print("code ========= > " +
-            code +
-            "===== >  " +
-            cachedToken.access_token);
-        access_token = await Gettoken().gettoken(code);
+        access_token =
+            await Gettoken().gettoken(code, cachedToken, expiredToken);
+        cachedToken = access_token;
       }
       final response = await client.get(
           Uri.parse('https://api.intra.42.fr/v2/users/' + login),
-          headers: headerInfo(access_token.access_token));
+          headers: headerInfo(cachedToken.access_token));
       if (response.statusCode == 200) {
         Map<String, dynamic> info = json.decode(response.body);
         return (info);

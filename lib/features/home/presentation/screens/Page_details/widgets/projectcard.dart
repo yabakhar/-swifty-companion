@@ -12,12 +12,6 @@ class ProjectCard extends StatefulWidget {
 
 class _ProjectCardState extends State<ProjectCard> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     String iconKey;
     Map<String, Object> icons = {
@@ -33,7 +27,6 @@ class _ProjectCardState extends State<ProjectCard> {
     if (widget.projectsUsers.finalMark == null &&
         widget.projectsUsers.status == "finished") iconKey = "failed";
     return Container(
-      
       height: 100,
       padding: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
@@ -41,8 +34,7 @@ class _ProjectCardState extends State<ProjectCard> {
           border: Border.all(
             color: Colors.blue,
             width: 2,
-          )
-          ),
+          )),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -79,7 +71,8 @@ class _ProjectCardState extends State<ProjectCard> {
                 widget.projectsUsers.project.slug,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w400),
+                style:
+                    TextStyle(color: Colors.grey, fontWeight: FontWeight.w400),
               ),
             ),
           ])

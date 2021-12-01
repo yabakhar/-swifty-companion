@@ -28,11 +28,11 @@ class Gettoken {
     return response;
   }
 
-  Future<stock_token> gettoken(String code) async {
-    final cachedToken = await SimplePreferences.getCachedToken();
+  Future<stock_token> gettoken(
+      String code, stock_token cachedToken, bool expiredToken) async {
     final client = RetryClient(http.Client());
     try {
-      if (cachedToken.access_token == null) {
+      if (cachedToken == null || expiredToken == true) {
         Response response = await get_oauth_token(code);
         if (response.statusCode == 200) {
           Map<String, dynamic> info = json.decode(response.body);

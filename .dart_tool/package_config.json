@@ -38,10 +38,22 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "convert",
+      "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/convert-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "1.17"
+    },
+    {
       "name": "cupertino_icons",
       "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "data_connection_checker",
+      "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/data_connection_checker-0.3.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
     },
     {
       "name": "fake_async",
@@ -72,6 +84,12 @@
       "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_animation_progress_bar-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_svg",
+      "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_svg-0.19.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
     },
     {
       "name": "flutter_test",
@@ -128,6 +146,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "path_drawing",
+      "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/path_drawing-0.4.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "1.19"
+    },
+    {
+      "name": "path_parsing",
+      "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/path_parsing-0.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "1.19"
+    },
+    {
       "name": "path_provider_linux",
       "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.2",
       "packageUri": "lib/",
@@ -158,6 +188,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "petitparser",
+      "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/platform-3.0.2",
       "packageUri": "lib/",
@@ -172,12 +208,6 @@
     {
       "name": "process",
       "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/process-4.2.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "progress_state_button",
-      "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/progress_state_button-1.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -228,12 +258,6 @@
       "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "spider_chart",
-      "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/spider_chart-0.1.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.1"
     },
     {
       "name": "stack_trace",
@@ -290,13 +314,19 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "xml",
+      "rootUri": "file:///goinfre/yabakhar/flutter/.pub-cache/hosted/pub.dartlang.org/xml-4.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
+    },
+    {
       "name": "swifty",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-11-29T19:59:23.065682Z",
+  "generated": "2021-12-01T22:11:19.130185Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

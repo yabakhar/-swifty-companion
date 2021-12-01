@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:swifty/const/avatar.dart';
+import 'package:swifty/const/images.dart';
 import 'package:swifty/features/home/presentation/models/cursus_details.dart';
 import 'package:swifty/features/home/presentation/models/user_info.dart';
+import 'package:swifty/features/home/presentation/services/image_profile_validate.dart';
 
 class Header extends StatefulWidget {
   Function(String) changeCursusState;
@@ -21,13 +22,11 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
-  bool _loadImageError = false;
-
   @override
   Widget build(BuildContext context) {
     TextStyle _textStyleValue = TextStyle(
         color: Colors.grey[50], fontSize: 14, fontWeight: FontWeight.w700);
-         TextStyle _textStyleItems = TextStyle(
+    TextStyle _textStyleItems = TextStyle(
         color: Colors.blue[100], fontSize: 14, fontWeight: FontWeight.w700);
     double level = (widget.cursusDetails?.level == null)
         ? 0.0
@@ -35,8 +34,7 @@ class _HeaderState extends State<Header> {
     return Container(
       decoration: new BoxDecoration(
         image: new DecorationImage(
-          image: new NetworkImage(
-              "https://cdn.intra.42.fr/coalition/cover/72/low-poly-texture-18_copy.png"),
+          image: AssetImage(background),
           fit: BoxFit.cover,
         ),
       ),
@@ -44,76 +42,73 @@ class _HeaderState extends State<Header> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-                padding: EdgeInsets.symmetric(horizontal: 50),
-                height: MediaQuery.of(context).size.height / 4.5,
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.black.withOpacity(0.5),
-                ),
-                child:
-                Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 50),
+            height: MediaQuery.of(context).size.height / 4.5,
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.black.withOpacity(0.5),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Grade",style: _textStyleItems),
-                        Text(
-                        (widget.cursusDetails?.grade == null)
-                            ? '-'
-                            : widget.cursusDetails?.grade.toString(),
-                        style: _textStyleValue,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                     Text("Location",style: _textStyleItems),
-                      Text(
-                        (widget.userInfo.location == null)
-                            ? 'Unavailable'
-                            : widget.userInfo.location.toString(),
-                        style: _textStyleValue,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                     Text("Wallet",style: _textStyleItems),
-                      Text(
-                        (widget.userInfo.wallet == null)
-                            ? ''
-                            : widget.userInfo.wallet.toString(),
-                        style: _textStyleValue,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      
-                     Text("Cursus",style: _textStyleItems),
-                      dropDown(widget.changeCursusState),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                     Text("Grade",style: _textStyleItems),
-                      Text(
-                        widget.userInfo.email,
-                        style: _textStyleValue,
-                      ),
-                       
-                    ],
-                  ),
-                ],
-              ),
-              ),
+                    Text("Grade", style: _textStyleItems),
+                    Text(
+                      (widget.cursusDetails?.grade == null)
+                          ? '-'
+                          : widget.cursusDetails?.grade.toString(),
+                      style: _textStyleValue,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Location", style: _textStyleItems),
+                    Text(
+                      (widget.userInfo.location == null)
+                          ? 'Unavailable'
+                          : widget.userInfo.location.toString(),
+                      style: _textStyleValue,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Wallet", style: _textStyleItems),
+                    Text(
+                      (widget.userInfo.wallet == null)
+                          ? ''
+                          : (widget.userInfo.wallet.toString() + " ₳"),
+                      style: _textStyleValue,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Cursus", style: _textStyleItems),
+                    dropDown(widget.changeCursusState),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Grade", style: _textStyleItems),
+                    Text(
+                      widget.userInfo.email,
+                      style: _textStyleValue,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 30),
             child: Row(
@@ -133,7 +128,6 @@ class _HeaderState extends State<Header> {
             ),
           ),
         ],
-        
       ),
     );
   }
@@ -147,8 +141,7 @@ class _HeaderState extends State<Header> {
         iconSize: 24,
         elevation: 8,
         style: const TextStyle(color: Colors.blue),
-        underline: Container(
-        ),
+        underline: Container(),
         onChanged: (newValue) {
           changeCursusState(newValue);
         },
@@ -165,7 +158,7 @@ class _HeaderState extends State<Header> {
 }
 
 SliverAppBar sliverAppBar(userInfo, Function(String) changeCursusState,
-    cursusDetails, dropDownValue,context) {
+    cursusDetails, dropDownValue, context) {
   return SliverAppBar(
     title: Center(
       child: Text(userInfo.login,
@@ -179,25 +172,72 @@ SliverAppBar sliverAppBar(userInfo, Function(String) changeCursusState,
     floating: false,
     pinned: true,
     snap: false,
-    actions: [CircleAvatar(
-                    
+    actions: [
+      InkWell(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Color(0xff3e5770),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide(
+                        color: Color(0xff3a305b),
+                      )),
+                  content: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      FutureBuilder<String>(
+                          future: getImageUrl(userInfo.imageUrl),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Image.network(snapshot.data);
+                            } else if (snapshot.hasError) {
+                              return Image(image: AssetImage(avatar));
+                            }
+                            return CircularProgressIndicator();
+                          }),
+                    ],
+                  ),
+                );
+              });
+        },
+        child: FutureBuilder<String>(
+            future: getImageUrl(userInfo.imageUrl),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return CircleAvatar(
                     radius: 25.0,
                     backgroundImage: NetworkImage(
-                        (userInfo.imageUrl == null)
-                            ? avatar
-                            : userInfo.imageUrl),
-                    // onBackgroundImageError: ,
-                  
-                    backgroundColor: Colors.transparent,
-                  ),],
+                      snapshot.data,
+                    ));
+              } else if (snapshot.hasError) {
+                return CircleAvatar(
+                    radius: 25.0, backgroundImage: AssetImage(avatar));
+              }
+              return CircularProgressIndicator();
+            }),
+      ),
+    ],
     elevation: 50,
-    flexibleSpace: FlexibleSpaceBar(
-      centerTitle: true,
-      background: Header(
-          userInfo: userInfo,
-          dropDowwnValue: dropDownValue,
-          changeCursusState: changeCursusState,
-          cursusDetails: cursusDetails),
+    flexibleSpace: Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xff3a305b),
+            Color(0xff3e5770),
+          ],
+        ),
+      ),
+      child: FlexibleSpaceBar(
+        centerTitle: true,
+        background: Header(
+            userInfo: userInfo,
+            dropDowwnValue: dropDownValue,
+            changeCursusState: changeCursusState,
+            cursusDetails: cursusDetails),
+      ),
     ),
   );
 }
