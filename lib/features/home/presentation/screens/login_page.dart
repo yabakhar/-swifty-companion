@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(logo42),
+              SvgPicture.asset(logo42,allowDrawingOutsideViewBox: true,),
               SizedBox(height: MediaQuery.of(context).size.height / 10),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -85,6 +85,9 @@ class _LoginState extends State<Login> {
                       fontWeight: FontWeight.bold,
                       color: Color(0xff3e5770),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      borderSide: BorderSide(color: Color(0xFF00BABC))),
                     errorText: _validate ? 'Login Not Found' : null,
                     hintText: 'Login',
                   ),
@@ -98,12 +101,13 @@ class _LoginState extends State<Login> {
                       color: Colors.white,
                     )),
                 style: ButtonStyle(
+                  backgroundColor:  MaterialStateProperty.all<Color>(Color(0xFF00BABC)),
                     padding: MaterialStateProperty.all<EdgeInsets>(
                         EdgeInsets.all(15)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.blue, width: 2)))),
+                            borderRadius: BorderRadius.circular(8.0),
+                            ))),
                 onPressed: () => searchLogin(),
               ),
             ],

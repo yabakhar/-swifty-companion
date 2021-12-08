@@ -24,6 +24,7 @@ class Header extends StatefulWidget {
 class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
+    bool isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     TextStyle _textStyleValue = TextStyle(
         color: Colors.grey[50], fontSize: 14, fontWeight: FontWeight.w700);
     TextStyle _textStyleItems = TextStyle(
@@ -43,7 +44,7 @@ class _HeaderState extends State<Header> {
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 15),
-            height: MediaQuery.of(context).size.height / 4.5,
+            height: (isPortrait) ? MediaQuery.of(context).size.height / 4.5 :MediaQuery.of(context).size.height / 3,
             margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
@@ -169,7 +170,7 @@ SliverAppBar sliverAppBar(userInfo, Function(String) changeCursusState,
               fontWeight: FontWeight.bold,
               fontFamily: "greycliff-cf-regular")),
     ),
-    expandedHeight: (isPortrait) ? MediaQuery.of(context).size.height/ 2.5:MediaQuery.of(context).size.height /1.80,
+    expandedHeight: (isPortrait) ? MediaQuery.of(context).size.height/ 2.5:MediaQuery.of(context).size.height / 1.80,
     floating: false,
     pinned: true,
     snap: false,
